@@ -1,0 +1,10 @@
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+   class="com.example.android.popularmoviesstage1.MovieGrid"
+    tools:layout="@layout/grid_view_main"
+    android:layout_width="match_parent"
+    android:id="@+id/fragment_id"
+    android:layout_height="match_parent"/>
