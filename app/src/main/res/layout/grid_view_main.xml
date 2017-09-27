@@ -8,6 +8,8 @@
     android:verticalSpacing="0dp"
     android:horizontalSpacing="0dp"
     android:stretchMode="columnWidth"
+    android:clickable="true"
+
     tools:context="com.example.android.popularmoviesstage1.MovieGrid"
     android:id="@+id/movies_grid">
 </GridView>
