@@ -22,16 +22,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/Plot_Synopsis"
         android:textSize="25sp"
         android:id="@+id/plot_synopsis"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/User_Rating"
         android:textSize="25sp"
         android:id="@+id/user_rating"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/Release_Date"
         android:textSize="25sp"
         android:id="@+id/release_date"/>
 </LinearLayout>

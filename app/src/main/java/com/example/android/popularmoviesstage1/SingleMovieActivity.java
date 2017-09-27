@@ -30,6 +30,7 @@ private TextView mDisplayText;
         if (singleMovie.hasExtra("bundleValues")){
 
             Bundle bundleEntered=singleMovie.getBundleExtra("bundleValues");
+
          mDisplayText.setText(bundleEntered.getString("originalTitle"));
             Picasso.with(getBaseContext()).load(bundleEntered.getString("posterUrl")).into(mDisplayImage);
             synopsis_plot.setText(bundleEntered.getString("plotSynopsis"));

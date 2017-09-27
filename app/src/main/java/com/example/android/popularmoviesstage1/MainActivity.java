@@ -3,9 +3,9 @@ package com.example.android.popularmoviesstage1;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu,menu);
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        MovieGrid mv=new MovieGrid();
+        transaction.replace(R.id.fragment_id,mv);
+        transaction.commit();
         return true;
     }
 
@@ -34,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id==R.id.action_settings){
             FragmentTransaction transaction=getFragmentManager().beginTransaction();
+            MovieGrid mv=new MovieGrid();
             Bundle bundle=new Bundle();
             bundle.putString("SortByPopularity","sortPopularity");
-            Log.d("bundle","lets go");
             mv.setArguments(bundle);
             transaction.replace(R.id.fragment_id,mv);
             transaction.commit();
