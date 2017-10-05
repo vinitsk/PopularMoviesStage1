@@ -52,7 +52,7 @@ public class MovieGrid extends  Fragment {
 
         try {
             url = new URL(builtUri.toString());
-            result = new JSONObject(getResponseFromHttpUrl(url));
+            result = new JSONObject(new QueryTask().doInBackground(url));
             resultArray = result.getJSONArray("results");
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,23 +66,6 @@ public class MovieGrid extends  Fragment {
 
 
 
-
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            InputStream in = urlConnection.getInputStream();
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                return scanner.next();
-            } else {
-                return null;
-            }
-        } finally {
-            urlConnection.disconnect();
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflator, ViewGroup viewGroup, Bundle savedInstanceState) {
@@ -102,10 +85,16 @@ public class MovieGrid extends  Fragment {
 
 
             if (bundle != null) {
-                if (bundle.getString("SortByPopularity") == "sortPopularity") {
+                if (bundle.getString("SortByTopRating") == "sortTopRating") {
                     jsonString = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
 
                 }
+
+                if (bundle.getString("SortByPopularity")=="sortPopularity"){
+                    jsonString="http://api.themoviedb.org/3/movie/popular?api_key=";
+                }
+
+
             }
 
             Uri builtUri = Uri.parse(jsonString);
@@ -113,7 +102,8 @@ public class MovieGrid extends  Fragment {
             URL url = null;
             try {
                 url = new URL(builtUri.toString());
-                result = new JSONObject(getResponseFromHttpUrl(url));
+                result = new JSONObject(new QueryTask().doInBackground(url));
+             //   result = new JSONObject(getResponseFromHttpUrl(url));
                 resultArray = result.getJSONArray("results");
             } catch (Exception e) {
                 e.printStackTrace();

@@ -2,8 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.popularmoviesstage1.MainActivity">
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/sort_by_popularity"
         android:title="@string/sort_by_popularity"
         android:orderInCategory="100"/>
+    <item android:id="@+id/sort_by_top_rating"
+        android:title="@string/sort_by_top_rating"
+        android:orderInCategory="100"/>
+
+
+
 
 </menu>

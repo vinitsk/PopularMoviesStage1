@@ -36,7 +36,17 @@ public class MainActivity extends AppCompatActivity {
     {
         int id=item.getItemId();
 
-        if (id==R.id.action_settings){
+        if (id==R.id.sort_by_top_rating){
+            FragmentTransaction transaction=getFragmentManager().beginTransaction();
+            MovieGrid mv=new MovieGrid();
+            Bundle bundle=new Bundle();
+            bundle.putString("SortByTopRating","sortTopRating");
+            mv.setArguments(bundle);
+            transaction.replace(R.id.fragment_id,mv);
+            transaction.commit();
+            return true;
+        }
+        if (id==R.id.sort_by_popularity){
             FragmentTransaction transaction=getFragmentManager().beginTransaction();
             MovieGrid mv=new MovieGrid();
             Bundle bundle=new Bundle();
