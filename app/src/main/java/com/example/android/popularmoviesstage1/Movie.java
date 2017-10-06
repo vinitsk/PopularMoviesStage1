@@ -13,13 +13,13 @@ public class Movie {
     String releaseDate;
 
 
-    public Movie(String movieID,String posterPath,String originalTitle,String plotSynopsis,String userRating,String releaseDate){
-        this.movieID=movieID;
-        this.posterPath=posterPath;
-        this.originalTitle=originalTitle;
-        this.plotSynopsis=plotSynopsis;
-        this.userRating=userRating;
-        this.releaseDate=releaseDate;
+    public Movie(String movieID, String posterPath, String originalTitle, String plotSynopsis, String userRating, String releaseDate) {
+        this.movieID = movieID;
+        this.posterPath = posterPath;
+        this.originalTitle = originalTitle;
+        this.plotSynopsis = plotSynopsis;
+        this.userRating = userRating;
+        this.releaseDate = releaseDate;
     }
 
 }

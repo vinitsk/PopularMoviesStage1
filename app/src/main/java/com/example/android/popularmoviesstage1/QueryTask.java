@@ -12,7 +12,8 @@ import java.util.Scanner;
  * Created by kalli on 10/4/2017.
  */
 
-public class QueryTask extends AsyncTask<URL,Void,String> {
+public class QueryTask extends AsyncTask<URL, Void, String> {
+    String result;
 
     @Override
     protected String doInBackground(URL... params) {
@@ -28,16 +29,23 @@ public class QueryTask extends AsyncTask<URL,Void,String> {
             scanner.useDelimiter("\\A");
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                return scanner.next();
+                result = scanner.next();
+                return result;
             } else {
                 return null;
             }
-        }catch (IOException e) {
-                e.printStackTrace();
-        }finally {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             urlConnection.disconnect();
         }
 
         return null;
     }
+
+
+    //  @Override
+    // protected void onPostExecute(String result){
+    //      return result;
+    //}
 }

@@ -28,12 +28,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-
 /**
  * Created by kalli on 9/9/2017.
  */
 
-public class MovieGrid extends  Fragment {
+public class MovieGrid extends Fragment {
 
 
     private JSONObject result = null;
@@ -41,7 +40,7 @@ public class MovieGrid extends  Fragment {
     ArrayList<Movie> movies = new ArrayList<Movie>();
     private String jsonString = null;
     private GridView movieGridView = null;
-    private View grid_main = null;
+    private View gridMain = null;
 
 
     public void MovieGrid() {
@@ -52,34 +51,30 @@ public class MovieGrid extends  Fragment {
 
         try {
             url = new URL(builtUri.toString());
-            result = new JSONObject(new QueryTask().doInBackground(url));
+
+            result = new JSONObject(new QueryTask().execute(url).get());
+            //result = new JSONObject(new QueryTask().doInBackground(url));
             resultArray = result.getJSONArray("results");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-
-
     }
-
-
-
 
 
     @Override
     public View onCreateView(LayoutInflater layoutInflator, ViewGroup viewGroup, Bundle savedInstanceState) {
 
 
-            ConnectivityManager cm =
-                    (ConnectivityManager) viewGroup.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        ConnectivityManager cm =
+                (ConnectivityManager) viewGroup.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
 
-
-        if (netInfo!=null&&netInfo.isConnected()) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+        if (netInfo != null && netInfo.isConnected()) {
+            // StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            // StrictMode.setThreadPolicy(policy);
             String jsonString = "http://api.themoviedb.org/3/movie/popular?api_key=";
             Bundle bundle = this.getArguments();
 
@@ -90,8 +85,8 @@ public class MovieGrid extends  Fragment {
 
                 }
 
-                if (bundle.getString("SortByPopularity")=="sortPopularity"){
-                    jsonString="http://api.themoviedb.org/3/movie/popular?api_key=";
+                if (bundle.getString("SortByPopularity") == "sortPopularity") {
+                    jsonString = "http://api.themoviedb.org/3/movie/popular?api_key=";
                 }
 
 
@@ -102,8 +97,8 @@ public class MovieGrid extends  Fragment {
             URL url = null;
             try {
                 url = new URL(builtUri.toString());
-                result = new JSONObject(new QueryTask().doInBackground(url));
-             //   result = new JSONObject(getResponseFromHttpUrl(url));
+                result = new JSONObject(new QueryTask().execute(url).get());
+                //   result = new JSONObject(new QueryTask().doInBackground(url));
                 resultArray = result.getJSONArray("results");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,12 +115,12 @@ public class MovieGrid extends  Fragment {
                 }
             }
 
-            int grid_view_main = R.layout.grid_view_main;
-            grid_main = layoutInflator.inflate(grid_view_main, viewGroup, false);
+            int gridViewMain = R.layout.grid_view_main;
+            gridMain = layoutInflator.inflate(gridViewMain, viewGroup, false);
 
             final MovieAdapter movieAdapter = new MovieAdapter(getContext(), movies);
 
-            movieGridView = (GridView) grid_main.findViewById(R.id.movies_grid);
+            movieGridView = (GridView) gridMain.findViewById(R.id.movies_grid);
             movieGridView.setAdapter(movieAdapter);
             movieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -146,9 +141,9 @@ public class MovieGrid extends  Fragment {
                 }
             });
 
-            return grid_main;
+            return gridMain;
         } else {
-            Toast.makeText(viewGroup.getContext(),"There is no internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(viewGroup.getContext(), "There is no internet connection", Toast.LENGTH_LONG).show();
             return null;
         }
 
