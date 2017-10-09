@@ -1,31 +1,24 @@
 package com.example.android.popularmoviesstage1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -41,7 +34,7 @@ public class MovieGrid extends Fragment {
     private String jsonString = null;
     private GridView movieGridView = null;
     private View gridMain = null;
-
+    public View returns;
 
     public void MovieGrid() {
 
@@ -52,9 +45,10 @@ public class MovieGrid extends Fragment {
         try {
             url = new URL(builtUri.toString());
 
-            result = new JSONObject(new QueryTask().execute(url).get());
+            /*result = new JSONObject(new QueryTask(new MovieUrlReturn()).execute(url));
+            // new MovieUrlReturn().execute(url);
             //result = new JSONObject(new QueryTask().doInBackground(url));
-            resultArray = result.getJSONArray("results");
+            resultArray = result.getJSONArray("results");*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,9 +89,9 @@ public class MovieGrid extends Fragment {
             Uri builtUri = Uri.parse(jsonString);
 
             URL url = null;
-            try {
+          /*  try {
                 url = new URL(builtUri.toString());
-                result = new JSONObject(new QueryTask().execute(url).get());
+                result = new JSONObject(new QueryTask(new MovieUrlReturn(),viewGroup,layoutInflator).execute(url));
                 //   result = new JSONObject(new QueryTask().doInBackground(url));
                 resultArray = result.getJSONArray("results");
             } catch (Exception e) {
@@ -145,10 +139,35 @@ public class MovieGrid extends Fragment {
         } else {
             Toast.makeText(viewGroup.getContext(), "There is no internet connection", Toast.LENGTH_LONG).show();
             return null;
-        }
+        }*/
+            try {
+                url = new URL(builtUri.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+           try {
+            return new QueryTask(new MovieUrlReturn(), viewGroup, layoutInflator, getActivity(), this).execute(url).get();
+              // return returns;
+              // return gridMain;
 
+
+           }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    /*    if (gridMain!=null) {
+            return gridMain;
+        }
+        else
+            return null;*/
+    return null;
 
     }
-}
 
+
+
+
+
+}
 

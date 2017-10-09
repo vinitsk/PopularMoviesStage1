@@ -1,6 +1,16 @@
 package com.example.android.popularmoviesstage1;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.*;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,11 +22,34 @@ import java.util.Scanner;
  * Created by kalli on 10/4/2017.
  */
 
-public class QueryTask extends AsyncTask<URL, Void, String> {
+public class QueryTask extends AsyncTask<URL, Void, View> {
     String result;
+    Context context = null;
+    UrlReturnListener listener;
+    LayoutInflater layoutInflator;
+    ViewGroup viewGroup;
+    private View gridMain = null;
+    Activity act=null;
+    MovieGrid movieGrid=null;
+ //   private final ProgressDialog dialog = new ProgressDialog(getContext());
+
+    public QueryTask(MovieUrlReturn listener, ViewGroup viewGroup, LayoutInflater layoutInflater, Activity act,MovieGrid movieGrid) {
+        //  this.context=context;
+        this.listener = listener;
+        this.layoutInflator=layoutInflater;
+        this.viewGroup=viewGroup;
+        this.act=act;
+        this.movieGrid=movieGrid;
+    }
 
     @Override
-    protected String doInBackground(URL... params) {
+    protected void onPreExecute(){
+   //     this.dialog.setMessage("Processing...");
+     //   this.dialog.show();
+    }
+
+    @Override
+    protected View doInBackground(URL... params) {
         URL url = params[0];
 
         HttpURLConnection urlConnection = null;
@@ -28,15 +61,19 @@ public class QueryTask extends AsyncTask<URL, Void, String> {
             Scanner scanner = new Scanner(in);
             scanner.useDelimiter("\\A");
             boolean hasInput = scanner.hasNext();
+
             if (hasInput) {
                 result = scanner.next();
-                return result;
+                JSONObject qresult = new JSONObject(result);
+
+                return listener.onTaskComplete(qresult,viewGroup,layoutInflator,act);
+              //  return result;
             } else {
                 return null;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }  finally {
             urlConnection.disconnect();
         }
 
@@ -44,8 +81,19 @@ public class QueryTask extends AsyncTask<URL, Void, String> {
     }
 
 
-    //  @Override
-    // protected void onPostExecute(String result){
-    //      return result;
-    //}
+      /* @Override
+        protected void onPostExecute(String result) {
+            //    super.onPostExecute(result);
+            try {
+                JSONObject qresult = new JSONObject(result);
+
+                listener.onTaskComplete(qresult,viewGroup,layoutInflator,act);
+
+                return listener;
+                //      this.dialog.setMessage("Processed...");
+           //     this.dialog.show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }*/
 }
