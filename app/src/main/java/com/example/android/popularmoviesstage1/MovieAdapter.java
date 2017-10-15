@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
-    final static String baseUrl = "http://api.themoviedb.org/3/movie/popular?api_key=";
+
 
     final static String imageURL = "http://image.tmdb.org/t/p/w154/";
     private ViewGroup vg;
@@ -27,9 +27,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         super(context, R.layout.movie_display, movieNames);
     }
 
-    public interface GridItemClickListener {
-        void onGridItemClick(int clickeItemIndex);
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup Parent) {
